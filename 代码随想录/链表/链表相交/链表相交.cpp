@@ -15,6 +15,21 @@ struct ListNode {
 class Solution {
 public:
 	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+		//首先是判断头结点是否为空，如果为空则根本没机会相交
+		if(headA == nullptr || headB == nullptr){
+			return nullptr;
+		}
 		
+		ListNode * pA = headA;
+		ListNode * pB = headB;
+		
+		while(pA != pB){
+			pA = (pA == nullptr) ? headB : pA->next;//进行判断，如果pA到了nullptr，则pA开始遍历headB
+			pB = (pB == nullptr) ? headA : pB->next;
+			
+			
+		}
+		//此时
+		return pA;
 	}
 };
