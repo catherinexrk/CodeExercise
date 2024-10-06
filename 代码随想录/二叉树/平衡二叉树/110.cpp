@@ -30,6 +30,10 @@ public:
 		if(abs(left - right) > 1) result = -1;
 		else result = max(left,right) + 1;
 		return result;
+		
+		
+		if(abs(left - right) > 1) return -1;//不是平衡二叉树
+		else return max(left,right) + 1;
 	}
 	
 	bool isBalanced(TreeNode* root) {
