@@ -151,6 +151,125 @@ public:
 class Solutiob5{
 public:
 	int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+		//两两数组相结合
+		unordered_map<int,int> map1;
+		for(int n1 : nums1){
+			for(int n2 : nums2){
+				map1[n1 + n2]++;//存储n1和n2的之和出现的次数
+			}
+		}
+		int count = 0;
+		for(int n3 : nums3){
+			for(int n4 : nums4){
+				if(map1.find(0 - (n3 + n4)) != map1.end()){
+					count += map1[0 - (n3 + n4)];
+				}
+			}
+		}
+		return count;
+	}
+};
+
+class Solutiob6{
+	bool canConstruct1(string ransomNote, string magazine) {
+		unordered_map<int,int> map;//key是字符 value是出现的次数
+		if(ransomNote.length() > magazine.length()) return false;
+		for(char temp : magazine){
+			map[temp - 'a']++;
+		}
+		for(char temp : ransomNote){
+			map[temp - 'a']--;
+		}
+		for(auto temp : map){
+			if(temp.second < 0) return false;
+		}
+		return true;
+	}
+	
+	bool canConstruct(string ransomNote, string magazine){
+		vector<int> result(26,0);
+		if(ransomNote.length() > magazine.length() ) return false;
+		for(auto temp : magazine){
+			result[temp - 'a']++;
+		}
 		
+		for(auto temp : ransomNote){
+			result[temp - 'a']--;
+		}
+		
+		for(auto temp : result){
+			if(temp < 0) return false;
+		}
+		return true;
+	}
+};
+
+class Solutiob7{
+public:
+	vector<vector<int>> threeSum(vector<int>& nums) {
+		vector<vector<int>> result;
+		sort(nums.begin(),nums.end());//按顺序排序一下
+		for(int i =0;i < nums.size();i++){
+			if(nums[i] > 0) return result; //排序好的首位元素都大于0，后序的更不可能组合成为0
+			if(i > 0 and nums[i] == nums[i - 1]){
+				continue;//阻止重复的元素出现
+			}
+			int left = i + 1;
+			int right = nums.size() - 1;
+			while(left < right){
+				int sum = 0;
+				sum = nums[i] + nums[left] + nums[right];
+				if(sum == 0) {
+					result.push_back({nums[i],nums[left],nums[right]});
+					while(right > left and nums[left] == nums[left + 1]) left++;
+					while(right > left and nums[right] == nums[right - 1]) right--;
+					
+					right--;
+					left++;
+				}
+				else if(sum > 0) right--;
+				else left++;
+				
+				
+				
+			}
+		}
+		
+		return result;
+	}
+};
+
+class Solution8{
+public:
+	vector<vector<int>> fourSum(vector<int>& nums, int target) {
+		vector<vector<int>> result;
+		sort(nums.begin(),nums.end());
+		for(int i = 0;i < nums.size();i++){
+//			if(nums[i] > target)  break;
+			if(i > 0 && nums[i] == nums[i - 1]) continue;
+			
+			for(int j = i + 1;j < nums.size();j++){
+//				if(nums[i] + nums[j] > target) break;
+				if(j > i + 1 && nums[j] == nums[j - 1]) continue;
+				int left = j + 1;
+				int right = nums.size() - 1;
+				while(left < right){
+					long long sum = (long long)nums[i] + nums[j] + nums[left] + nums[right];
+					if(sum < target) left++;
+					else if(sum > target) right--;
+					else{
+						result.push_back({nums[i],nums[j],nums[left],nums[right]});
+						
+						while(right > left && nums[right] == nums[right - 1]) right--;
+						while(right > left && nums[left] == nums[left + 1]) left++;
+						
+						right--;
+						left++;
+					}
+				}
+			}
+		}
+		
+		return result;
 	}
 };
