@@ -28,4 +28,14 @@ public:
 		
 		return node;
 	}
+	
+	
+	TreeNode* searchBST1(TreeNode* root, int val) {
+		if(root == nullptr || root->val == val) return root;
+		
+		TreeNode * node = nullptr;
+		if(root->val > val) node = searchBST(root->left,val);
+		if(root->val < val) node = searchBST(root->right,val);
+		return node;
+	}
 };
